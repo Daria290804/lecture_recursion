@@ -47,22 +47,17 @@ def recursive_binary_search(arr, x, left, right):
     if right >= left:
         mid = left + (right - left) // 2
 
-        # If element is present at the middle itself
         if arr[mid] == x:
             return mid
-        # If element is smaller than mid, then it can only be present in left subarray
         elif arr[mid] > x:
             return recursive_binary_search(arr, x, left, mid - 1)
-        # Else the element can only be present in right subarray
         else:
             return recursive_binary_search(arr, x, mid + 1, right)
     else:
-        # Element is not present in array
         return None
 
 
 def main():
-    import json
 
     # Load data from sequential.json
     with open('sequential.json') as f:
