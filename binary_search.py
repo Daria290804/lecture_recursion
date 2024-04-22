@@ -42,11 +42,42 @@ def binary_search(seq, number):
     return None
 
 
-def main(file_name, number):
-    sequence = read_data(file_name=file_name, key="ordered_numbers")
+def recursive_binary_search(arr, x, left, right):
+    """Recursive binary search algorithm."""
+    if right >= left:
+        mid = left + (right - left) // 2
 
-    # iterative binary search
-    binary_search(sequence, number=number)
+        # If element is present at the middle itself
+        if arr[mid] == x:
+            return mid
+        # If element is smaller than mid, then it can only be present in left subarray
+        elif arr[mid] > x:
+            return recursive_binary_search(arr, x, left, mid - 1)
+        # Else the element can only be present in right subarray
+        else:
+            return recursive_binary_search(arr, x, mid + 1, right)
+    else:
+        # Element is not present in array
+        return None
+
+
+def main():
+    import json
+
+    # Load data from sequential.json
+    with open('sequential.json') as f:
+        data = json.load(f)
+
+    arr = data['array']
+    x = data['target']
+
+    # Perform recursive binary search
+    index = recursive_binary_search(arr, x, 0, len(arr) - 1)
+
+    if index is not None:
+        print(f"Target {x} found at index {index}.")
+    else:
+        print(f"Target {x} not found in the array.")
 
 
 if __name__ == "__main__":
